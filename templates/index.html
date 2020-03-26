@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+</head>
+
+<body>
+    <nav class="navbar2 navbar-default" style="height: 80px;">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="#" class="navbar-brand"><img src="https://www.smarttechtank.com/images/logo_stt_black.svg?crc=482673961"  width="40%" alt=""></a>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li role="presentation" class="">
+              
+            </li>
+          </ul>
+        </div>
+      </nav>
+ <div class="login">
+	
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <div class="container">
+        <h1>Parameter Explorer</h1>
+      <form action="{{ url_for('predict')}}"method="post">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Land Under Durian Production(hectare)</label>
+          <input type="text" class="form-control" name="land_under_durian_production(hectare)"  required="required" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Fertilizer Consumption,(kg per hectare)</label>
+          <input type="text" class="form-control" name="fertilizer_consumption,(kg_per_hectare)" required="required" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Machinery (tractors)</label>
+          <input type="text" class="form-control" name="ag_machinery,tractors" required="required" />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Average Precipitation (mm per year)</label>
+          <input type="text" class="form-control" name="average_precipitation,(mm_per_year)" required="required" />
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Headline Objective Durian Production(tons)</label>
+            <input type="text"  class="form-control" name="headline_objective_durian_production(tons)"  required="required">
+          </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+    </div>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

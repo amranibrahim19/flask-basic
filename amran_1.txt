@@ -1,0 +1,144 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+import numpy as np
+
+
+# In[2]:
+
+
+df = pd.read_csv('moa.csv')
+df.columns = df.columns.str.replace(' ', '')
+df.columns
+#df['Tahun']=pd.to_datetime(df['Tahun'], format='%Y')
+#df.set_index(['Tahun'], inplace=True)
+#df.set_index(['Tahun'], inplace=True)
+
+
+# In[3]:
+
+
+type(df['Pengeluaran_(Mt)'])
+
+
+# In[4]:
+
+
+import random
+random.seed( 30 )
+random.randint(0,10)
+dfr = pd.DataFrame(np.random.randint(0,1000,size=(len(df), 1)), columns=list('r'))
+dfr
+df['labour_hours_per_hectar']=(df['Luas_Bertanam_(ha)']/100)+dfr['r']
+
+
+# In[5]:
+
+
+import random
+random.seed( 30 )
+random.randint(0,10)
+dfr = pd.DataFrame(np.random.randint(0,5,size=(len(df), 1)), columns=list('r'))
+dfr
+df['machinery_hours_per_hectar']=(df['Luas_Bertanam_(ha)']/20)+dfr['r']
+
+
+# In[6]:
+
+
+from random import gauss
+Training_Index = (np.log(df['Luas_Berhasil_(ha)'])*0.0001)+dfr['r']
+
+
+# In[7]:
+
+
+df['Training_index']=Training_Index
+
+
+# In[8]:
+
+
+Nilai_Penglrn = df['Nilai_(RM_000)']/df['Pengeluaran_(Mt)']
+df['Nilai_Penglrn_(RM_000/Mt)'] = Nilai_Penglrn
+
+
+# In[9]:
+
+
+df
+
+
+# In[10]:
+
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import VarianceThreshold
+
+
+# In[11]:
+
+
+#Data gets scaled automatically by sklearn's implementation
+X = df.loc[:, ~df.columns.isin(['Tahun','Nilai_(RM_000)','Pengeluaran_(Mt)','Nilai_Penglrn_(RM_000/Mt)'])]
+y = df['Pengeluaran_(Mt)']
+names = df.loc[:, ~df.columns.isin([ 'Tahun','Nilai_(RM_000)','Pengeluaran_(Mt)','Nilai_Penglrn_(RM_000/Mt)'])].columns
+
+
+# In[12]:
+
+
+from sklearn.feature_selection import SelectPercentile
+from sklearn.feature_selection import f_regression
+Selector_f = SelectPercentile(f_regression, percentile=25)
+Selector_f.fit(X,y)
+for n,s in zip(names,Selector_f.scores_):
+    print( 'F-score: %3.2f for feature %s '% (s,n))
+
+
+# In[13]:
+
+
+compiled = [names,Selector_f.scores_]
+
+
+# In[14]:
+
+
+compiled = pd.DataFrame(compiled)
+
+
+# compiled
+
+# In[15]:
+
+
+compiled = compiled.T
+
+
+# In[16]:
+
+
+compiled = compiled.sort_values(by=[1], ascending=False)
+
+
+# In[17]:
+
+
+compiled
+
+
+# In[19]:
+
+
+ax = compiled.plot.bar(x=0, y=1, rot=45)
+
+
+
+
